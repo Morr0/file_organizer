@@ -15,14 +15,14 @@ def move_files(path: str):
             #     continue
 
             # Split the file path to access the last . in it to find the relevant dir to store in
-            splits = filePath.split(".")
-            if (len(splits) > 0):
-                destDir = get_belonging_dir_name(splits[-1])
+            file_ext = get_file_ext(filePath)
+            if (file_ext):
+                destDir = get_belonging_dir_name(file_ext)
             
             # Place the file in the new dir
             Path(destDir).mkdir(parents=True, exist_ok=True)
             try:
-                os.rename("./{}".format(filePath), "./{}/{}".format(destDir, filePath))
+                os.replace("./{}".format(filePath), "./{}/{}".format(destDir, filePath))
             except FileNotFoundError: # In case of temporary files while downloading, those get removed
                 pass
             except PermissionError: # Will assume the file is being used by another process
@@ -42,3 +42,13 @@ def get_belonging_dir_name(fileExtension: str):
         return "Compressed"
     else:
         return DEFAULT
+
+def get_file_ext(filePath: str):
+    splits = filePath.split(".")
+    if (len(splits) > 0):
+        return splits[-1]
+    
+    return None
+
+def get_file_without_ext(filePath: str):
+    return Path(filePath).stem
