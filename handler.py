@@ -11,4 +11,4 @@ class Handler(FileSystemEventHandler):
 
     def on_created(self, event):
         if (type(event) is FileCreatedEvent):
-            move_files(path)
+            move_files(self.path)
