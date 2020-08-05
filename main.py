@@ -16,7 +16,7 @@ observer.schedule(event_handler, path)
 observer.start()
 try:
     while True:
-        time.sleep(1)
+        time.sleep(15)
 except KeyboardInterrupt:
     observer.stop()
     
